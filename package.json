@@ -1,12 +1,15 @@
 {
-  "name": "recruiterassignment",
+  "name": "crypto-crash",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Backend for Crypto Crash Game - Recruiter Assignment",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "seed": "node seed/seed.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["node", "express", "websocket", "socket.io", "mongodb", "crypto", "game"],
+  "author": "Shivam Mishra",
   "license": "ISC",
   "description": "",
   "dependencies": {
@@ -16,5 +19,8 @@
     "mongoose": "^8.16.4",
     "socket.io": "^4.8.1",
     "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
   }
 }
