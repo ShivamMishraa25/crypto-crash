@@ -1,3 +1,5 @@
+const { default: mongoose } = require("mongoose");
+
 const transactionSchema = new mongoose.Schema({
   playerId: mongoose.Schema.Types.ObjectId,
   usdAmount: Number,

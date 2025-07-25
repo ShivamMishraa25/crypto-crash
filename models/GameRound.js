@@ -1,3 +1,5 @@
+const { default: mongoose } = require("mongoose");
+
 const gameRoundSchema = new mongoose.Schema({
   roundNumber: Number,
   crashPoint: Number,
