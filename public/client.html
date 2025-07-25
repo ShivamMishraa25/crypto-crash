@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crypto Crash Client</title>
+</head>
+
+<body>
+    <h1>Crypto Crash WebSocket Client</h1>
+    <div id="status"></div>
+    <div id="multiplier"></div>
+    <button id="cashout">Cash Out</button>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+        const socket = io("http://localhost:5000");
+        const status = document.getElementById("status");
+        const multiplierDisplay = document.getElementById("multiplier");
+        const cashoutBtn = document.getElementById("cashout");
+        let currentMultiplier = 1;
+        let currentRound = null;
+
+        socket.on("round_start", (data) => {
+            currentRound = data.roundId;
+            status.innerText = `Round #${data.roundNumber} started. Seed: ${data.seed}`;
+        });
+
+        socket.on("multiplier_update", (data) => {
+            currentMultiplier = data.multiplier;
+            multiplierDisplay.innerText = `Multiplier: ${currentMultiplier}x`;
+        });
+
+        socket.on("round_crash", (data) => {
+            status.innerText = `💥 Crashed at ${data.crashPoint}x`;
+        });
+
+        socket.on("player_cashout", (data) => {
+            status.innerText = `💰 Player ${data.playerId} cashed out at ${data.multiplier
+                }x → $${data.payoutUSD.toFixed(2)}`;
+        });
+
+        cashoutBtn.onclick = () => {
+            const playerId = prompt("Enter your player ID to cash out:");
+            socket.emit("cashout_request", { playerId });
+        };
+    </script>
+</body>
+
+</html>
